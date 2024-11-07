@@ -1,0 +1,18 @@
+kz:
+  errors:
+    messages: 
+      title: "Шот-фактура әлі жасалмады, біз сіздің тапсырысыңызды күтеміз!"
+      desc: "Таңдағаннан кейін ол осы бетте пайда болады"
+  buttons:
+    repeat: "Қайталау"
+  order:
+    table_name: "Сіздің үстеліңіз"
+    waiter_info: "Сізге қызмет етеді"
+    show_order: "Есептік жазбаны көру"
+    bill_open: "Есептік жазба ашық"
+    your_order_title: "Сіздің тапсырысыңыз"
+    total: "Барлығы"
+    service: "Қызмет"
+    to_pay: "Төлем үшін"
+  restaurant_info:
+    street: "ст."

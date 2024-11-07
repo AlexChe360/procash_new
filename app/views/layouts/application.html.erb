@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Procash" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= yield :head %>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <%= action_cable_meta_tag %>
+  </head>
+  <body>
+    <main data-controller="bottom-sheet" class="bg-gray-100 min-h-screen container w-full p-5">
+      <header class="flex items-center justify-between mb-5">
+        <div class="flex justefy-center">
+          <%= image_tag 'logo.png', alt: 'logo_image', class: 'h-10'%>
+        </div>
+        <div class="language-switcher font-medium">
+          <%= link_to "RU", url_for(locale: :ru, **request.query_parameters), class: ("text-green-600" if I18n.locale == :ru) %> |
+          <%= link_to "EN", url_for(locale: :en, **request.query_parameters), class: ("text-green-600" if I18n.locale == :en) %> |
+          <%= link_to "KZ", url_for(locale: :kz, **request.query_parameters), class: ("text-green-600" if I18n.locale == :kz) %>
+        </div>
+      </header>
+      <%= yield %>
+    </main>
+  </body>
+</html>

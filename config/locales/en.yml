@@ -1,0 +1,18 @@
+en:
+  errors:
+    messages: 
+      title: "The invoice has not been generated yet, we are waiting for your order!"
+      desc: "After choosing it will appear on this page"
+  buttons:
+    repeat: "Repeat"
+  order:
+    table_name: "Your table"
+    waiter_info: "Serving you"
+    show_order: "View bill"
+    bill_open: "The account is open"
+    your_order_title: "Your order"
+    total: "Total"
+    service: "Service"
+    to_pay: "To pay"
+  restaurant_info:
+    street: "st."

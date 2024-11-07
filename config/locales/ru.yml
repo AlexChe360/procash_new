@@ -1,0 +1,19 @@
+ru:
+  errors:
+    messages: 
+      title: "Счёт еще не сформирован ждём ваш заказ!"
+      desc: "После выбора он появится на этой странице"
+      title_error: "Ошибка"
+  buttons:
+    repeat: "Повторить"
+  order:
+    table_name: "Ваш стол"
+    waiter_info: "Вас обслуживает"
+    show_order: "Посмотреть счёт"
+    bill_open: "Счёт открыт"
+    your_order_title: "Ваш заказ"
+    total: "Итого"
+    service: "Обслуживание"
+    to_pay: "К оплате"
+  restaurant_info:
+    street: "ул." 

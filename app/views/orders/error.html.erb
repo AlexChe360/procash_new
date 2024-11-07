@@ -1,0 +1,11 @@
+<%# app/views/orders/error_page.html.erb %>
+<div class="bg-white shadow-md rounded-lg p-4 justify-center text-center">
+  <%= image_tag 'empty_state.png', alt: 'error_image' %>
+  <h3 class="text-xl font-semibold text-gray-900 mt-2">
+    <%= error_message[:title] %>
+  </h3>
+  <p class="text-sm font-medium text-gray-800 mt-2">
+    <%= error_message[:desc] %>
+  </p>
+  <button class="w-full mt-4 bg-blue-600 text-white text-lg font-semibold py-2 rounded-lg shadow flex items-center justify-center h-11"><%= t('buttons.repeat') %></button>
+</div>
