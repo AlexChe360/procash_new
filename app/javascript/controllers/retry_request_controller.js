@@ -6,8 +6,6 @@ export default class extends Controller {
 	static targets = ["button", "preloader"];
 
 	connect() {
-		console.log("RetryRequestController подключён");
-
 		setTimeout(() => {
 			this.hidePreloader();
 		}, 3000); // Время в миллисекундах (здесь 3 секунды)
