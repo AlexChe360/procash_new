@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+
   def show
     restaurant_id = params[:restaurantId]
     number_table = params[:numberTable]
@@ -6,19 +7,21 @@ class OrdersController < ApplicationController
     r_keeper_service = RKeeperService.new(restaurant_id)
 
     # Первый запрос - GetTableList
-    # table_list_response = r_keeper_service.get_table_list
-    # if table_list_response[:error]
-    #   render :error_page, locals: { error_message: { title: I18n.t("errors.messages.title"), desc: I18n.t("errors.messages.desc") } }  and return
-    # end
+    table_list_response = r_keeper_service.get_table_list
+    if table_list_response[:error]
+      broadcast_error_message(I18n.t("errors.messages.title"), I18n.t("errors.messages.desc"))
+      return
+    end
 
-    # table_code = find_table_code(table_list_response, number_table)
-    # if table_code.nil?
-    #   render :error_page, locals: { error_message: { title: I18n.t("errors.messages.title_error"), desc: "Стол с номером #{number_table} не найден" }  } and return
-    # end
+    table_code = find_table_code(table_list_response, number_table)
+    if table_code.nil?
+      broadcast_error_message(I18n.t("errors.messages.title_error"), "Стол с номером #{number_table} не найден")
+      return
+    end
 
 
     # Второй запрос - GetOrderList
-    order_list_response = r_keeper_service.get_order_list(number_table)
+    order_list_response = r_keeper_service.get_order_list(table_code)
     if order_list_response[:error]
       broadcast_error_message(I18n.t("errors.messages.title"), I18n.t("errors.messages.desc"))
       return
@@ -44,6 +47,8 @@ class OrdersController < ApplicationController
     end
 
     waiter_info = find_employee(employees_response, waiter_id)
+    discount = (order_response.dig("taskResponse", "order", "price", "total").to_f * 0.1).to_i
+    total_price = discount + order_response.dig("taskResponse", "order", "price", "total").to_i
 
     render :show, locals: {
       number_table: number_table,
@@ -52,9 +57,9 @@ class OrdersController < ApplicationController
       products: order_response.dig("taskResponse", "order", "products"),
       comment: order_response.dig("taskResponse", "order", "comment"),
       price: order_response.dig("taskResponse", "order", "price", "total"),
-      discount: order_response.dig("taskResponse", "order", "discountIds")&.first&.dig("value"),
-      waiter_info: waiter_info.dig("name"),
-      total_price: order_response.dig("taskResponse", "order", "price", "total") + order_response.dig("taskResponse", "order", "discountIds")&.first&.dig("value")
+      waiter_info: waiter_info.nil? ? "Админ" : waiter_info.dig("name"),
+      discount_result: discount,
+      total_price_result: total_price
     }
   end
 

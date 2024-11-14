@@ -66,14 +66,14 @@
     <div class="flex justify-between items-center">
       <h3 class="text-sm font-regular"><%= t("order.service")%> 10%</h3>
       <div class="text-right">
-        <p class="text-xl font-semibold"><%= number_with_delimiter(discount, delimiter: ' ') %> ₸</p>
+        <p class="text-xl font-semibold"><%= number_with_delimiter(discount_result, delimiter: ' ') %> ₸</p>
       </div>
     </div>
   </div>
   <!-- Кнопка оплаты -->
   <div class="mt-4">
     <button data-action="click->bottom-sheet#close" class="w-full bg-green-600 text-white px-4 py-2 rounded-full text-xl font-semibold">
-      <%= t("order.to_pay") %> <%= number_with_delimiter(total_price, delimiter: ' ') %> ₸
+      <%= t("order.to_pay") %> <%= number_with_delimiter(total_price_result, delimiter: ' ')  %> ₸
     </button>
   </div>
 </div>

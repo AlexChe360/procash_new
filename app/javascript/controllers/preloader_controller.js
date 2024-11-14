@@ -5,11 +5,8 @@ export default class extends Controller {
 
 	connect() {
 		this.showPreloader();
-		console.log("showPreloader")
-
 		// Скрыть прелоадер через несколько секунд
 		setTimeout(() => {
-			console.log("hidePreloader")
 			this.hidePreloader();
 		}, 3000); // Время в миллисекундах (здесь 3 секунды)
 	}

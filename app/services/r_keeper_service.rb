@@ -14,7 +14,7 @@ class RKeeperService
 			"params": {
 				"sync": {
 					"objectId": @restaurant_id,
-					"timeout": 120
+					"timeout": 220
 				}
 			}
 		}
