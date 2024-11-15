@@ -28,6 +28,9 @@ gem "tailwindcss-rails"
 # Work with .env
 gem "dotenv-rails", groups: [:development, :test, :production]
 
+gem 'multi_xml', '~> 0.6.0'
+gem 'zeitwerk', '~> 2.6.18'
+
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 
@@ -35,7 +38,8 @@ gem "dotenv-rails", groups: [:development, :test, :production]
 # gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[ windows jruby ]
+#gem "tzinfo-data", platforms: %i[ windows jruby ]
+gem "tzinfo-data", platforms: %i[mswin mingw jruby]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
