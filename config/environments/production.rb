@@ -6,6 +6,10 @@ Rails.application.configure do
   # Code is not reloaded between requests.
   config.enable_reloading = false
 
+  config.hosts << "procash.kz"
+  config.hosts << "www.procash.kz"
+  config.hosts.clear
+
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
   # and those relying on copy on write to perform better.
@@ -24,10 +28,16 @@ Rails.application.configure do
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present? || ENV['RENDER'].present?
 
   # Compress CSS using a preprocessor.
-  config.assets.css_compressor = :sass
+  #config.assets.css_compressor = :sass
 
   # Do not fall back to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = false
+  config.assets.compile = true
+  config.assets.digest = true
+  config.assets.css_compressor = nil
+
+  config.assets.precompile += %w( application.tailwind.css )
+
+  config.asset_host = "https://procash.kz"
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"
@@ -41,8 +51,8 @@ Rails.application.configure do
 
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
-  # config.action_cable.url = "wss://example.com/cable"
-  # config.action_cable.allowed_request_origins = [ "http://example.com", /http:\/\/example.*/ ]
+  config.action_cable.url = "wss://procash.kz/cable"
+  config.action_cable.allowed_request_origins = [ "https://procash.kz", "http://procah.kz" ]
 
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
   # Can be used together with config.force_ssl for Strict-Transport-Security and secure cookies.
@@ -93,15 +103,11 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Enable DNS rebinding protection and other `Host` header attacks.
-  # config.hosts = [
-  #   "example.com",     # Allow requests from example.com
-  #   /.*\.example\.com/ # Allow requests from subdomains like `www.example.com`
-  # ]
+  config.hosts = [
+    "procash.kz",     # Allow requests from example.com
+    /.*\.procash\.kz/ # Allow requests from subdomains like `www.example.com`
+  ]
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
-  config.action_cable.mount_path = '/cable'
-
-  config.action_cable.url = "ws://localhost:3000/cable"
-  config.action_cable.allowed_request_origins = [ "http://localhost:3000" ]
 end
