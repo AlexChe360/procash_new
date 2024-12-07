@@ -16,6 +16,9 @@ RUN bundle install
 # Копируем остальные файлы приложения
 COPY . /app/
 
+# Выполняем миграции базы данных
+RUN bundle exec rails db:migrate
+
 # Предварительно компилируем ассеты для production
 RUN bundle exec rails assets:precompile
 
