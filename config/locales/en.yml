@@ -5,6 +5,23 @@ en:
       desc: "After choosing it will appear on this page"
   buttons:
     repeat: "Repeat"
+  main:
+    main_page: "Main Page"
+    main_title: "Quick payment of the bill at the restaurant"
+    target_page_title: "Page purpose"
+    target_description: "The main page is designed to display information about the current order of the user associated with a specific table in the restaurant. It allows the user to quickly view the order details, the amount to be paid, and select the appropriate payment method."
+    main_functional_title: "Main functionality"
+    information_about_table: "Table information"
+    number_table_title: "Displays the table number, the name of the restaurant, and the date the order was created. This data is decoded from the QR code."
+    details_order_title: "Order details"
+    detaile_order_description: "A list of ordered items with the name, quantity, and price. The total order amount is also displayed."
+    interactive_payment_selection: "Interactive payment selection"
+    interactive_payment_selection_description: "A button to go to the payment method selection page (e.g. Apple Pay, Google Pay, or entering a bank card)."
+    error_handling_title: "Error handling"
+    error_handling_description: "In case of problems loading data (e.g. API unavailability), an error message with instructions for the user is displayed."
+    privacy_policy: "Privacy Policy"
+    public_offer: "Public Offer"
+    payment_procedure: "Payment Procedure"
   order:
     table_name: "Your table"
     waiter_info: "Serving you"
@@ -14,5 +31,7 @@ en:
     total: "Total"
     service: "Service"
     to_pay: "To pay"
+    continue: "Continue"
+    pay_bill_title: "Paying the bill"
   restaurant_info:
     street: "st."

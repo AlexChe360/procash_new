@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
   scope "(:locale)", locale: /en|ru|kz/ do
+    root "orders#index"
+    
     get "order", to: "orders#show", as: :order
   end
 
@@ -15,5 +17,5 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   # Defines the root path route ("/")
-  # root "posts#index"
+ 
 end

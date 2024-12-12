@@ -64,6 +64,20 @@ class RKeeperService
 		make_request(request_body)
 	end
 
+	def get_restaurant_info
+		request_body = {
+			"taskType": "GetRestaurantInfo",
+			"params": {
+				"sync": {
+					"objectId": @restaurant_id,
+					"timeout": 220
+				}
+			}
+		}
+
+		make_request(request_body)
+	end
+
 	private
 
 	def headers

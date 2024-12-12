@@ -1,5 +1,9 @@
 class OrdersController < ApplicationController
 
+  def index
+    render :index
+  end
+
   def show
     restaurant_id = params[:restaurantId]
     number_table = params[:numberTable]
@@ -46,6 +50,12 @@ class OrdersController < ApplicationController
       return
     end
 
+    restaurant_info_response = r_keeper_service.get_restaurant_info
+    if restaurant_info_response[:error]
+      broadcast_error_message(I18n.t("errors.messages.title"), I18n.t("errors.messages.desc"))
+      return
+    end
+
     waiter_info = find_employee(employees_response, waiter_id)
     discount = (order_response.dig("taskResponse", "order", "price", "total").to_f * 0.1).to_i
     total_price = discount + order_response.dig("taskResponse", "order", "price", "total").to_i
@@ -59,6 +69,7 @@ class OrdersController < ApplicationController
       price: order_response.dig("taskResponse", "order", "price", "total"),
       waiter_info: waiter_info.nil? ? "Админ" : waiter_info.dig("name"),
       discount_result: discount,
+      restaurant_info: restaurant_info_response.dig("taskResponse", "restaurant", "name"),
       total_price_result: total_price
     }
   end

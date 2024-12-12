@@ -5,9 +5,9 @@ default: &default
   username: <%= ENV["DATABASE_USERNAME"] %>
   password: <%= ENV["DATABASE_PASSWORD"] %>
 
-# development:
-#   <<: *default
-#   database: procash_development
+development:
+  <<: *default
+  database: <%= ENV["DATABASE_DEV_NAME"] %>
 
 production:
   <<: *default
