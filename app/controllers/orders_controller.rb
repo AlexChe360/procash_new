@@ -12,6 +12,7 @@ class OrdersController < ApplicationController
 
     # Первый запрос - GetTableList
     table_list_response = r_keeper_service.get_table_list
+    puts "table_list_response: #{table_list_response}"
     if table_list_response[:error]
       broadcast_error_message(I18n.t("errors.messages.title"), I18n.t("errors.messages.desc"))
       return
@@ -27,7 +28,7 @@ class OrdersController < ApplicationController
     # Второй запрос - GetOrderList
     order_list_response = r_keeper_service.get_order_list(table_code)
     if order_list_response[:error]
-      broadcast_error_message(I18n.t("errors.messages.title"), I18n.t("errors.messages.desc"))
+      r_keeper_error_message(I18n.t("errors.messages.r_keeper_error"), order_list_response[:error])
       return
     end
 
@@ -82,8 +83,17 @@ class OrdersController < ApplicationController
     }
   end
 
+  def r_keeper_error_message(title, desc)
+    render :r_keeper_errro, locals: {
+      error_message: { title: title, desc: desc }
+    }
+  end
+
   def find_table_code(table_list_response, number_table)
-    table_list_response.dig("taskResponse", "tables").find { |table| table["name"] == number_table }&.dig("code")
+    tables = table_list_response.dig("taskResponse", "tables")
+    puts "tables: #{tables}"
+    return nil unless tables.is_a?(Array)
+    tables.find { |table| table["name"] == number_table }&.dig("code")
   end
     
   def find_employee(employees_response, waiter_id)

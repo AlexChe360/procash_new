@@ -3,6 +3,7 @@ en:
     messages: 
       title: "The invoice has not been generated yet, we are waiting for your order!"
       desc: "After choosing it will appear on this page"
+      r_keeper_error: "Oops! Something went wrong"
   buttons:
     repeat: "Repeat"
   main:

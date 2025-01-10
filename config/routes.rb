@@ -4,6 +4,8 @@ Rails.application.routes.draw do
     root "orders#index"
     
     get "order", to: "orders#show", as: :order
+
+    resources :payments, only: [:create]
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
