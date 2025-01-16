@@ -5,7 +5,9 @@ Rails.application.routes.draw do
     
     get "order", to: "orders#show", as: :order
 
-    resources :payments, only: [:create]
+    post 'payments', to: 'payments#create'
+    get 'payments/success', to: 'payments#success'
+    get 'payments/failure', to: 'payments#failure'
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

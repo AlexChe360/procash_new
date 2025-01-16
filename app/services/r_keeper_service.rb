@@ -88,19 +88,25 @@ class RKeeperService
 	end
 
 	def make_request(request_body)
-		response = self.class.post(ENV["RKEEPER_BASE_URL"], headers: headers, body: request_body.to_json)
+		begin
+			response = self.class.post(ENV["RKEEPER_BASE_URL"], headers: headers, body: request_body.to_json)
 
-		if response.success?
-			parsed_response = response.parsed_response
-			if parsed_response.dig("error", "agentError")
-				{ error: parsed_response["error"]["agentError"]["desc"] }
-			elsif parsed_response.dig("error", "wsError")
-				{ error: parsed_response["error"]["wsError"]["desc"] }
+			if response.success?
+				parsed_response = response.parsed_response
+				if parsed_response.dig("error", "agentError")
+					{ error: parsed_response["error"]["agentError"]["desc"] }
+				elsif parsed_response.dig("error", "wsError")
+					{ error: parsed_response["error"]["wsError"]["desc"] }
+				else
+					parsed_response
+				end
 			else
-				parsed_response
+				{ error: "Ошибка запроса: #{response.message}" }
 			end
-		else
-			{ error: "Ошибка запроса: #{response.message}" }
+		rescue Net::OpenTimeout, Net::ReadTimeout => e
+			{ error: "Ошибка тайм-аута: #{e.message}" }
+		rescue Net::StandardError => e
+			{ error: "Непредвиденная ошибка: #{e.message}" }
 		end
 	end
 end

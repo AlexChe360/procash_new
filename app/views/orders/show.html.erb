@@ -37,34 +37,28 @@
     </button>
   </div>
 </div>
+<!-- Payment Section -->
 <div class="mt-4 bg-white shadow-md rounded-lg p-4">
   <div class="text-center items-center">
-    <h2 class="text-xl font-bold"><%= t("order.pay_bill_title")%></h2>
+    <h2 class="text-xl font-bold"><%= t("order.pay_bill_title") %></h2>
     <div class="mt-5 justify-center">
-      <div data-payment-target="overlay" data-action="click->payment#close" class="fixed inset-0 bg-black bg-opacity-50 hidden transition-opacity duration-300 ease-in-out"></div>
-      <button 
-        data-action="click->payment#open" 
-        data-controller="payment"
-        data-order-id="00001"
-        data-amount="<%= total_price_result %>"
-        data-description="Test Payment"
-        class="items-center space-x-3 bg-black text-white py-2 px-4 rounded-full mx-auto hover:bg-gray-800 transition focus:outline-none inline-flex"
-        >
-        <!-- Логотип Mastercard -->
-        <div class="relative flex items-center justify-center mr-4 ml-2">
-          <div class="w-6 h-6 rounded-full bg-red-600"></div>
-          <div class="w-6 h-6 rounded-full bg-yellow-500 absolute left-4"></div>
-        </div>
-        <!-- Логотип Visa -->
-        <div class="flex items-center px-2 py-1 bg-blue-600 text-white text-sm font-semibold rounded mr-4">
-          VISA
-        </div>
-        <!-- Текст кнопки -->
-        <span class="font-medium whitespace-nowrap pr-6">Оплатить картой</span>
-      </button>
-      <div data-payment-target="payment" class="fixed inset-x-0 bottom-0 transform translate-y-full transition-transform duration-300 ease-in-out bg-white shadow-lg rounded-t-3xl p-4">
-        <div>Текст окна оплаты</div>
-      </div>
+      <%= turbo_frame_tag "payment" do %>
+        <%= form_with url: payments_path, method: :post, data: { turbo: false } do |form| %>
+          <%= form.hidden_field :amount, value: total_price_result %>
+          <%= form.hidden_field :description, value: 'pinta_payment' %>
+          <button type="submit" id="payButton"
+              class="items-center space-x-3 bg-black text-white py-2 px-4 rounded-full mx-auto hover:bg-gray-800 transition focus:outline-none inline-flex">
+            <div class="relative flex items-center justify-center mr-4 ml-2">
+              <div class="w-6 h-6 rounded-full bg-red-600"></div>
+              <div class="w-6 h-6 rounded-full bg-yellow-500 absolute left-4"></div>
+            </div>
+            <div class="flex items-center px-2 py-1 bg-blue-600 text-white text-sm font-semibold rounded mr-4">
+              VISA
+            </div>
+            <span class="font-medium whitespace-nowrap pr-6">Оплатить картой</span>
+          </button>
+        <% end %>
+      <% end %>
     </div>
   </div>
 </div>

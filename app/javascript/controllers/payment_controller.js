@@ -1,53 +1,42 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-	static targets = ["payment", "overlay"]
+	static targets = ["form", "preloader"];
 
-	open(event) {
-		this.overlayTarget.classList.remove("hidden")
-		this.paymentTarget.classList.remove("translate-y-full")
-		event.preventDefault();
+	connect() {
+		console.log("Payment Modal Controller connected");
+	}
 
-		// Извлечение данных из атрибутов кнопки
-		const orderId = this.element.dataset.orderId;
-		const amount = this.element.dataset.amount;
-		const description = this.element.dataset.description;
+	submitPayment(event) {
+		event.preventDefault(); // Останавливаем стандартное поведение формы
 
-		const data = {
-			pg_order_id: orderId,
-			pg_amount: amount,
-			pg_description: description
-		};
+		// Показать прелоадер
+		this.preloaderTarget.classList.remove("hidden");
 
-		// Отправляем POST-запрос на сервер
-		fetch("/payments", {
+		// Отправка формы через fetch
+		fetch(this.formTarget.action, {
 			method: "POST",
 			headers: {
-				"Content-Type": "application/json",
-				"X-CSRF-Token": this.getCsrfToken() // Получаем CSRF-токен для защиты
+				'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
 			},
-			body: JSON.stringify(data)
-		}).then(response => {
-			if (!response.ok) {
-				throw new Error("Ошибка при выполнении запроса");
-			}
-			return response.json();
-		}).then(data => {
-			console.log("Ответ сервера:", data);
-			// Вы можете перенаправить пользователя на страницу успеха
-			// или выполнить другие действия
-		}).catch(error => {
-			console.error("Ошибка:", error);
-			alert("Что-то пошло не так. Попробуйте еще раз.");
-		});
-	}
-
-	getCsrfToken() {
-		return document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-	}
-
-	close() {
-		this.overlayTarget.classList.add("hidden")
-		this.paymentTarget.classList.add("translate-y-full")
+			body: new FormData(this.formTarget)
+		})
+			.then(response => response.json())
+			.then(data => {
+				if (data.pg_redirect_url) {
+					// Перенаправляем на страницу оплаты
+					window.location.href = data.pg_redirect_url;
+				} else {
+					alert("Ошибка: " + data.pg_error_description);
+				}
+			})
+			.catch(error => {
+				console.error("Error:", error);
+				alert("Произошла ошибка при обработке платежа.");
+			})
+			.finally(() => {
+				// Скрыть прелоадер
+				this.preloaderTarget.classList.add("hidden");
+			});
 	}
 }

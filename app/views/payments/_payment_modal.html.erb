@@ -1,0 +1,18 @@
+<%# app/views/payments/_payment_modal.html.erb %>
+<% if pg_redirect_url.present? %>
+  <div data-target="payment_modal.overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden transition-opacity duration-300 ease-in-out"></div>
+  <div data-target="payment_modal.paymentModal" class="fixed inset-x-0 bottom-0 transform translate-y-full transition-transform duration-300 ease-in-out bg-white shadow-lg rounded-t-3xl p-4">
+    <div class="flex justify-between items-center pb-5">
+      <h3 class="text-xl font-bold"><%= t("order.payment_frame") %></h3>
+    </div>
+    <div>
+      <!-- Убедитесь, что в коде iframe нет автозаполнения или автосвежения -->
+      <iframe id="paymentIframe" allow="autoplay; encrypted-media" src="<%= pg_redirect_url %>" width="100%" height="600" frameborder="0" sandbox="allow-scripts allow-forms allow-same-origin"></iframe>
+    </div>
+    <div class="mt-4 flex justify-between">
+      <button data-action="click->payment_modal#closeModal" class="w-full bg-green-600 text-white px-4 py-2 rounded-full text-xl font-semibold">
+        <%= t("order.close") %>
+      </button>
+    </div>
+  </div>
+<% end %>

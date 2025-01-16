@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+  
 
   def index
     render :index
@@ -12,9 +13,8 @@ class OrdersController < ApplicationController
 
     # Первый запрос - GetTableList
     table_list_response = r_keeper_service.get_table_list
-    puts "table_list_response: #{table_list_response}"
     if table_list_response[:error]
-      broadcast_error_message(I18n.t("errors.messages.title"), I18n.t("errors.messages.desc"))
+      r_keeper_error_message(I18n.t("errors.messages.r_keeper_error"), table_list_response[:error])
       return
     end
 
@@ -23,7 +23,6 @@ class OrdersController < ApplicationController
       broadcast_error_message(I18n.t("errors.messages.title_error"), "Стол с номером #{number_table} не найден")
       return
     end
-
 
     # Второй запрос - GetOrderList
     order_list_response = r_keeper_service.get_order_list(table_code)
