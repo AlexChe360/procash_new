@@ -29,7 +29,7 @@ gem "tailwindcss-rails"
 gem "dotenv-rails", groups: [:development, :test, :production]
 
 gem 'multi_xml', '~> 0.6.0'
-gem 'zeitwerk', '~> 2.6.18'
+gem 'zeitwerk', '~> 2.7.1'
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
